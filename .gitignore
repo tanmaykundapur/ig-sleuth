@@ -3,11 +3,9 @@ __pycache__/
 .venv/
 .env
 .env.local
+.env.production
 dev_data/
 *:Zone.Identifier
 *.Zone.Identifier
 *.zip
-node_modules/
-dist/
-.astro/
-
+.vscode/
