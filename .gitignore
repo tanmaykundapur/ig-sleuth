@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.local
+dev_data/
+*:Zone.Identifier
+*.Zone.Identifier
+*.zip
+node_modules/
+dist/
+.astro/
+

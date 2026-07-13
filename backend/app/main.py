@@ -1,0 +1,68 @@
+import json, tempfile, zipfile
+from pathlib import Path
+from .parsers.loader import load_category_files
+from .parsers.connections import parse_connections
+from .analysis.connections import group_by_username, mutuals, not_following_back, not_following_back_by_you, followed_first, diff_snapshots
+from .models.connections import ConnectionsSnapshot, Relationship, RelationshipType, ConnectionsDiff, ConnectionsAnalysisResult
+from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+MAX_UPLOAD_SIZE = 500 * 1024 * 1024
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4321"],
+    allow_methods=["POST"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def home():
+    return {"Hello": "World"}
+
+def safe_extract(zip_path: Path, extract_to: Path) -> None:
+    with zipfile.ZipFile(zip_path) as zf:
+        for member in zf.namelist():
+            target_path = (extract_to / member).resolve()
+            if not str(target_path).startswith(str(extract_to.resolve())):
+                raise HTTPException(status_code=400, detail="Unsafe zip contents")
+        zf.extractall(extract_to)
+
+@app.post("/analyze/connections")
+async def analyze_connections(file: UploadFile):
+    contents = await file.read()
+    
+    if len(contents) > MAX_UPLOAD_SIZE:
+        raise HTTPException(status_code=400, detail="File too large")
+    
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_path = Path(tmp)
+        zip_path = tmp_path / "upload.zip"
+        zip_path.write_bytes(contents)
+
+        try:
+            safe_extract(zip_path, tmp_path)
+        except zipfile.BadZipFile:
+            raise HTTPException(status_code=400, detail="Not a valid zip file")
+        
+        raw_followers = load_category_files(tmp_path, "followers_*.json")
+        raw_following = load_category_files(tmp_path, "following.json")
+        raw_close_friends = load_category_files(tmp_path, "close_friends.json")
+        raw_blocked = load_category_files(tmp_path, "blocked_profiles.json")
+
+    snapshot = parse_connections(raw_followers, raw_following, raw_close_friends)
+    relationships = group_by_username(snapshot)
+    mutuals_list = mutuals(relationships)
+    not_following_back_list = not_following_back(relationships)
+    not_following_back_by_you_list = not_following_back_by_you(relationships)
+    followed_first_list = followed_first(relationships)
+
+    return ConnectionsAnalysisResult(
+        snapshot=snapshot,
+        mutuals=sorted(mutuals_list),
+        not_following_back=sorted(not_following_back_list),
+        not_followed_back_by_you=sorted(not_following_back_by_you_list),
+        followed_first=followed_first_list,
+    )
