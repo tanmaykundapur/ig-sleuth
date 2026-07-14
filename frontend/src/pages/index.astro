@@ -1,9 +1,7 @@
 ---
-import UploadForm from "../islands/UploadForm";
+import Dashboard from "../islands/Dashboard";
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
-
-<html>
-  <body>
-    <UploadForm client:load />
-  </body>
-</html>
+<BaseLayout>
+  <Dashboard client:load />
+</BaseLayout>
