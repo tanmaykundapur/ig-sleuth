@@ -30,8 +30,9 @@ def safe_extract(zip_path: Path, extract_to: Path) -> None:
                 raise HTTPException(status_code=400, detail="Unsafe zip contents")
         zf.extractall(extract_to)
 
-@app.post("/analyze/connections")
-async def analyze_connections(file: UploadFile):
+# =============================================================================================================
+@app.post("/analyze")
+async def analyze(file: UploadFile):
     contents = await file.read()
     
     if len(contents) > MAX_UPLOAD_SIZE:
