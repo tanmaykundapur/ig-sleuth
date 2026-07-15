@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { ConnectionsAnalysisResult } from "../lib/types";
+import ExportInstructions from "./ExportInstructions";
 import NotFollowingBackHero from "./NotFollowingBackHero";
 import StatsOverview from "./StatsOverview";
 import UploadForm from "./UploadForm";
@@ -11,6 +12,20 @@ export default function Dashboard() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(false);
 
+    if (result) {
+        return (
+            <div className="flex flex-col gap-8">
+                <button
+                    onClick={() => setResult(null)}
+                    className="self-start text-sm text-gray-500 hover:text-gray-900 transition-colors"
+                >
+                    ← Analyze another export
+                </button>
+                <DashboardContent result={result} />
+            </div>
+        );
+    }
+
     return (
         <div className="w-full flex flex-col items-center gap-8">
             <UploadForm
@@ -18,15 +33,13 @@ export default function Dashboard() {
                 onLoadingChange={setIsLoading}
                 onError={setError}
             />
-
             {isLoading && <p className="text-sm text-gray-500">Loading...</p>}
             {error && (
                 <p className="text-sm text-red-600 font-medium">
                     Something went wrong.
                 </p>
             )}
-
-            {result && <DashboardContent result={result} />}
+            <ExportInstructions />
         </div>
     );
 }
