@@ -25,14 +25,23 @@ export default function Dashboard() {
                 </p>
             )}
 
-            {result && (
-                <div className="w-full flex flex-col gap-8">
-                    {/* dashboard components go here, e.g.: */}
-                    <NotFollowingBackHero
-                        usernames={result.not_following_back}
-                    />
-                </div>
-            )}
+            {result && <DashboardContent result={result} />}
+        </div>
+    );
+}
+
+function DashboardContent({ result }: { result: ConnectionsAnalysisResult }) {
+    const profileUrlByUsername: Record<string, string> = {};
+    for (const rel of result.snapshot.relationships) {
+        profileUrlByUsername[rel.username] = rel.profile_url;
+    }
+
+    return (
+        <div className="w-full flex flex-col gap-8">
+            <NotFollowingBackHero
+                usernames={result.not_following_back}
+                profileUrlByUsername={profileUrlByUsername}
+            />
         </div>
     );
 }

@@ -1,8 +1,12 @@
+interface NotFollowingBackHeroProps {
+    usernames: string[];
+    profileUrlByUsername: Record<string, string>;
+}
+
 export default function NotFollowingBackHero({
     usernames,
-}: {
-    usernames: string[];
-}) {
+    profileUrlByUsername,
+}: NotFollowingBackHeroProps) {
     return (
         <div className="w-full max-w-lg mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm p-6 md:p-8">
             <div className="pb-3">
@@ -20,7 +24,13 @@ export default function NotFollowingBackHero({
                             className="m-1 p-4 border border-gray-200 rounded-2xl hover:font-bold"
                             key={index}
                         >
-                            {username}
+                            <a
+                                href={profileUrlByUsername[username]}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {username}
+                            </a>
                         </li>
                     ))}
                 </ul>
