@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { ConnectionsAnalysisResult } from "../lib/types";
 import NotFollowingBackHero from "./NotFollowingBackHero";
+import StatsOverview from "./StatsOverview";
 import UploadForm from "./UploadForm";
 
 export default function Dashboard() {
@@ -36,8 +37,27 @@ function DashboardContent({ result }: { result: ConnectionsAnalysisResult }) {
         profileUrlByUsername[rel.username] = rel.profile_url;
     }
 
+    const totalFollowing = result.snapshot.relationships.filter(
+        (r) => r.relationship_type === "following",
+    ).length;
+
+    const totalFollowers = result.snapshot.relationships.filter(
+        (r) => r.relationship_type === "follower",
+    ).length;
+
+    const mutualCount = result.mutuals.length;
+    const notFollowingBackCount = result.not_following_back.length;
+    const notFollowedBackByYouCount = result.not_followed_back_by_you.length;
+
     return (
         <div className="w-full flex flex-col gap-8">
+            <StatsOverview
+                totalFollowing={totalFollowing}
+                totalFollowers={totalFollowers}
+                mutualCount={mutualCount}
+                notFollowingBackCount={notFollowingBackCount}
+                notFollowedBackByYouCount={notFollowedBackByYouCount}
+            />
             <NotFollowingBackHero
                 usernames={result.not_following_back}
                 profileUrlByUsername={profileUrlByUsername}
