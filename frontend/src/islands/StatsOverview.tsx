@@ -21,7 +21,7 @@ export default function StatsOverview({
 
     return (
         <>
-            <div className="w-full max-w-lg mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm p-6 md:p-8 flex flex-col gap-6">
+            <div className="w-full mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm p-6 md:p-8 flex flex-col gap-6">
                 {/* profile row */}
                 <div className="flex items-center gap-4">
                     <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gray-100 shrink-0" />
@@ -63,7 +63,7 @@ export default function StatsOverview({
                     ))}
                 </div>
             </div>
-            <div className="w-full max-w-lg mx-auto bg-[#FEDC80] border border-gray-200 rounded-2xl shadow-sm p-6 md:p-8 flex flex-col gap-3">
+            <div className="w-full mx-auto bg-[#FEDC80] border border-gray-200 rounded-2xl shadow-sm p-6 md:p-8 flex flex-col gap-3">
                 {totalFollowing - totalFollowers > 50 && (
                     <h1 className="font-bold">
                         Holy ratio! Get your followers up! 🙈
