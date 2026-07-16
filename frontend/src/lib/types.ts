@@ -40,3 +40,11 @@ export interface AnalyzeResponse {
     connections: ConnectionsAnalysisResult;
     profile: ProfileInfo;
 }
+
+export interface MutualTimeline {
+    username: string;
+    followedThemSince: string; // your following.timestamp
+    followedYouSince: string; // their follower.timestamp
+    gapDays: number;
+    followedFirst: "you" | "them" | "same_time";
+}
