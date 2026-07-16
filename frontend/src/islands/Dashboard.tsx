@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { AnalyzeResponse } from "../lib/types";
+import ConnectionsListCard from "./ConnectionsListCard";
 import ExportInstructions from "./ExportInstructions";
-import NotFollowingBackHero from "./NotFollowingBackHero";
 import StatsOverview from "./StatsOverview";
 import UploadForm from "./UploadForm";
 
@@ -72,8 +72,13 @@ function DashboardContent({ result }: { result: AnalyzeResponse }) {
                 notFollowingBackCount={notFollowingBackCount}
                 notFollowedBackByYouCount={notFollowedBackByYouCount}
             />
-            <NotFollowingBackHero
-                usernames={result.connections.not_following_back}
+
+            <ConnectionsListCard
+                notFollowingBack={result.connections.not_following_back}
+                notFollowedBackByYou={
+                    result.connections.not_followed_back_by_you
+                }
+                mutuals={result.connections.mutuals}
                 profileUrlByUsername={profileUrlByUsername}
             />
         </div>
