@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { buildMutualTimelines } from "../lib/connectionsAnalysis";
 import type { AnalyzeResponse } from "../lib/types";
 import ConnectionsListCard from "./ConnectionsListCard";
 import ExportInstructions from "./ExportInstructions";
+import FollowFirstLeaderboard from "./FollowFirstLeaderboard";
 import StatsOverview from "./StatsOverview";
 import UploadForm from "./UploadForm";
 
@@ -62,6 +64,8 @@ function DashboardContent({ result }: { result: AnalyzeResponse }) {
     const notFollowedBackByYouCount =
         result.connections.not_followed_back_by_you.length;
 
+    const mutualTimelines = buildMutualTimelines(result.connections);
+
     return (
         <div className="w-full flex flex-col gap-8">
             <StatsOverview
@@ -79,6 +83,10 @@ function DashboardContent({ result }: { result: AnalyzeResponse }) {
                     result.connections.not_followed_back_by_you
                 }
                 mutuals={result.connections.mutuals}
+                profileUrlByUsername={profileUrlByUsername}
+            />
+            <FollowFirstLeaderboard
+                timelines={mutualTimelines}
                 profileUrlByUsername={profileUrlByUsername}
             />
         </div>
