@@ -1,12 +1,12 @@
 import json, tempfile, zipfile
 from pathlib import Path
-from .parsers.loader import load_category_files
+from .parsers.loader import load_category_files, load_profile_picture
 from .parsers.connections import parse_connections
 from .analysis.connections import group_by_username, mutuals, not_following_back, not_following_back_by_you, followed_first, diff_snapshots
 from .models.connections import ConnectionsSnapshot, Relationship, RelationshipType, ConnectionsDiff, ConnectionsAnalysisResult
 from .models.profile import ProfileInfo
 from .models.response import AnalyzeResponse
-from .parsers.profile import encode_profile_picture, parse_profile
+from .parsers.profile import parse_profile
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -55,7 +55,9 @@ async def analyze(file: UploadFile):
         raw_following = load_category_files(tmp_path, "following.json")
         raw_close_friends = load_category_files(tmp_path, "close_friends.json")
         raw_blocked = load_category_files(tmp_path, "blocked_profiles.json")
-        profile_pic = encode_profile_picture(tmp_path)
+        profile_pic = load_profile_picture(tmp_path)
+        raw_profile = load_category_files(tmp_path, "personal_information.json")
+
 
 
     # ProfileInfo(name=name, username=username, email=None, profile_picture_url=profile_pic)
@@ -77,7 +79,7 @@ async def analyze(file: UploadFile):
     )
 
     # Profile Analysis
-    raw_profile = load_category_files(tmp_path, "personal_information.json")
+    print("raw_profile (live route):", raw_profile)
     profile_analysis_result = parse_profile(raw_profile)
     profile_analysis_result.profile_picture_url = profile_pic
 
@@ -85,8 +87,16 @@ async def analyze(file: UploadFile):
 
 # def main():
 #     tmp_path = Path("dev_data")
+#     print("tmp_path:", tmp_path)
+#     print("tmp_path resolved:", tmp_path.resolve())
+#     matching = list(tmp_path.rglob("personal_information.json"))
+#     print("Matched in real route:", matching)
 #     raw_profile = load_category_files(tmp_path, "personal_information.json")
-#     print(raw_profile)
+#     print("raw_profile in route:", raw_profile)
+#     profile_analysis_result = parse_profile(raw_profile)
+#     print("===========================")
+#     print(profile_analysis_result)
+
 
 # if __name__ == "__main__":
 #     main()

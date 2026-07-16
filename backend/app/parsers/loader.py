@@ -1,22 +1,19 @@
 from pathlib import Path
 import json
+from ..parsers.profile import encode_profile_picture
 
 def load_category_files(export_root: Path, filename_pattern: str) -> list[dict]:
     res = []
     matching_files = list(export_root.rglob(filename_pattern))
-    
+
     for file in matching_files:
         file_data = json.loads(file.read_text(encoding="utf-8"))
-        
-        if isinstance(file_data, list):
-            res.extend(file_data)
-            
-        elif isinstance(file_data, dict):
-            for key, value in file_data.items():
-                # Make sure it's a list AND it actually contains the data dicts we want
-                if isinstance(value, list) and len(value) > 0:
-                    # Double check the first item inside is a dict with 'string_list_data'
-                    if isinstance(value[0], dict) and "string_list_data" in value[0]:
-                        res.extend(value)
-    
+        res.append(file_data)
+
     return res
+
+def load_profile_picture(export_root: Path) -> str | None:
+    matches = list(export_root.rglob("18130264597577607.jpg"))  # or a pattern matching whatever the real filename structure is
+    if not matches:
+        return None
+    return encode_profile_picture(matches[0])  # matches[0] is a file, not a directory
