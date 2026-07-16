@@ -48,6 +48,7 @@ function DashboardContent({ result }: { result: AnalyzeResponse }) {
         profileUrlByUsername[rel.username] = rel.profile_url;
     }
 
+    const profileInfo = result.profile;
     const totalFollowing = result.connections.snapshot.relationships.filter(
         (r) => r.relationship_type === "following",
     ).length;
@@ -64,6 +65,7 @@ function DashboardContent({ result }: { result: AnalyzeResponse }) {
     return (
         <div className="w-full flex flex-col gap-8">
             <StatsOverview
+                profileInfo={profileInfo}
                 totalFollowing={totalFollowing}
                 totalFollowers={totalFollowers}
                 mutualCount={mutualCount}
