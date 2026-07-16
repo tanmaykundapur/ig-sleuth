@@ -1,8 +1,8 @@
 import { useState } from "react";
-import type { ConnectionsAnalysisResult } from "../lib/types";
+import type { AnalyzeResponse } from "../lib/types";
 
 interface Props {
-    onResult: (result: ConnectionsAnalysisResult) => void;
+    onResult: (result: AnalyzeResponse) => void;
     onLoadingChange: (loading: boolean) => void;
     onError: (hasError: boolean) => void;
 }
@@ -57,7 +57,7 @@ export default function UploadForm({
                         onLoadingChange(true);
                         try {
                             const response = await fetch(
-                                "http://localhost:8000/analyze/connections",
+                                "http://localhost:8000/analyze",
                                 {
                                     method: "POST",
                                     body: formData,
@@ -66,7 +66,7 @@ export default function UploadForm({
                             if (!response.ok) {
                                 onError(true);
                             } else {
-                                const data: ConnectionsAnalysisResult =
+                                const data: AnalyzeResponse =
                                     await response.json();
                                 onResult(data);
                             }

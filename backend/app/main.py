@@ -4,6 +4,9 @@ from .parsers.loader import load_category_files
 from .parsers.connections import parse_connections
 from .analysis.connections import group_by_username, mutuals, not_following_back, not_following_back_by_you, followed_first, diff_snapshots
 from .models.connections import ConnectionsSnapshot, Relationship, RelationshipType, ConnectionsDiff, ConnectionsAnalysisResult
+from .models.profile import ProfileInfo
+from .models.response import AnalyzeResponse
+from .parsers.profile import encode_profile_picture, parse_profile
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -52,6 +55,10 @@ async def analyze(file: UploadFile):
         raw_following = load_category_files(tmp_path, "following.json")
         raw_close_friends = load_category_files(tmp_path, "close_friends.json")
         raw_blocked = load_category_files(tmp_path, "blocked_profiles.json")
+        profile_pic = encode_profile_picture(tmp_path)
+
+
+    # ProfileInfo(name=name, username=username, email=None, profile_picture_url=profile_pic)
 
     snapshot = parse_connections(raw_followers, raw_following, raw_close_friends)
     relationships = group_by_username(snapshot)
@@ -60,10 +67,26 @@ async def analyze(file: UploadFile):
     not_following_back_by_you_list = not_following_back_by_you(relationships)
     followed_first_list = followed_first(relationships)
 
-    return ConnectionsAnalysisResult(
+    # Connections Analysis
+    connections_analysis_result = ConnectionsAnalysisResult(
         snapshot=snapshot,
         mutuals=sorted(mutuals_list),
         not_following_back=sorted(not_following_back_list),
         not_followed_back_by_you=sorted(not_following_back_by_you_list),
         followed_first=followed_first_list,
     )
+
+    # Profile Analysis
+    raw_profile = load_category_files(tmp_path, "personal_information.json")
+    profile_analysis_result = parse_profile(raw_profile)
+    profile_analysis_result.profile_picture_url = profile_pic
+
+    return AnalyzeResponse(connections=connections_analysis_result, profile=profile_analysis_result)
+
+# def main():
+#     tmp_path = Path("dev_data")
+#     raw_profile = load_category_files(tmp_path, "personal_information.json")
+#     print(raw_profile)
+
+# if __name__ == "__main__":
+#     main()

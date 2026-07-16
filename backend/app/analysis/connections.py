@@ -103,7 +103,6 @@ def get_relationship(rels_for_user: list[Relationship], rel_type: RelationshipTy
             return rel
     return None
 
-
 # Groups Relationship list by username
 def group_by_username(snapshot: ConnectionsSnapshot) -> dict[str, list[Relationship]]:
     relationships = defaultdict(list)

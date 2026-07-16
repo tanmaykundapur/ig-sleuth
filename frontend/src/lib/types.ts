@@ -28,3 +28,15 @@ export interface ConnectionsAnalysisResult {
     not_followed_back_by_you: string[];
     followed_first: Record<string, FollowedFirst>;
 }
+
+export interface ProfileInfo {
+    name: string;
+    username: string;
+    email: string | null;
+    profile_picture_url: string | null;
+}
+
+export interface AnalyzeResponse {
+    connections: ConnectionsAnalysisResult;
+    profile: ProfileInfo;
+}
