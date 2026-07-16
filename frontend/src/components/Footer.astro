@@ -1,6 +1,21 @@
 ---
 // Footer.astro
 ---
-<footer class="flex justify-center items-center p-2 text-gray-700 text-sm">
-    <p>IGSleuth — <a href="/privacy">privacy</a> · <a href="https://github.com/tanmaykundapur/ig-sleuth">GitHub</a></p>
+<footer class="w-full border-t border-gray-100 mt-auto">
+    <div class="max-w-lg mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-gray-500">
+        <p class="font-mouse font-bold text-base text-gray-700">InstaSLEUTH</p>
+
+        <nav class="flex items-center gap-4">
+            <a href="/privacy" class="hover:text-gray-900 transition-colors">Privacy</a>
+            <a href="/about" class="hover:text-gray-900 transition-colors">About</a>
+            <a
+                href="https://github.com/tanmaykundapur/ig-sleuth"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hover:text-gray-900 transition-colors"
+            >
+                GitHub
+            </a>
+        </nav>
+    </div>
 </footer>
