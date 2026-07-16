@@ -1,0 +1,93 @@
+---
+// privacy.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+    <div class="w-full flex flex-col gap-6">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Privacy Policy</h1>
+            <p class="text-sm text-gray-500 mt-1">Last updated: 7/16/2026</p>
+        </div>
+
+        <section class="flex flex-col gap-2">
+            <h2 class="font-semibold text-gray-900">The short version</h2>
+            <p class="text-sm text-gray-600">
+                You upload your own Instagram data export to analyze it. We process it to generate your results, then
+                it's gone. We don't create an account for you, and we don't keep a copy of your export or your
+                Instagram data on our servers after your request finishes.
+            </p>
+        </section>
+
+        <section class="flex flex-col gap-2">
+            <h2 class="font-semibold text-gray-900">What we collect</h2>
+            <p class="text-sm text-gray-600">
+                When you upload your Instagram data export, we temporarily process it on our server to generate the
+                analysis shown to you (such as follower/following comparisons and profile information). This
+                processing happens in memory and in a temporary, isolated location that is automatically and
+                permanently deleted immediately after your request completes. We do not write your export, or any
+                data extracted from it, to a permanent database.
+            </p>
+            <p class="text-sm text-gray-600">
+                We do not require an account, login, email address, or any other personal information to use this
+                tool.
+            </p>
+        </section>
+
+        <section class="flex flex-col gap-2">
+            <h2 class="font-semibold text-gray-900">What we don't do</h2>
+            <ul class="text-sm text-gray-600 list-disc list-inside flex flex-col gap-1">
+                <li>We don't sell, rent, or share your data with third parties.</li>
+                <li>We don't use your data for advertising, and we don't run ad trackers on this site.</li>
+                <li>We don't retain your Instagram export, or any data derived from it, after your session ends.</li>
+                <li>We don't require you to create an account.</li>
+            </ul>
+        </section>
+
+        <section class="flex flex-col gap-2">
+            <h2 class="font-semibold text-gray-900">Anonymous usage counter</h2>
+            <p class="text-sm text-gray-600">
+                We keep a simple count of how many times this tool has been used, so we can track its usage. This
+                counter does not store any information about you or the content of your upload; it's just a number
+                that increments.
+            </p>
+        </section>
+
+        <section class="flex flex-col gap-2">
+            <h2 class="font-semibold text-gray-900">Children's privacy</h2>
+            <p class="text-sm text-gray-600">
+                This tool is not directed at children under 13, and we do not knowingly collect information from
+                children under 13.
+            </p>
+        </section>
+
+        <section class="flex flex-col gap-2">
+            <h2 class="font-semibold text-gray-900">Your rights</h2>
+            <p class="text-sm text-gray-600">
+                Because we don't retain your data after processing, there is generally nothing stored for us to
+                provide, correct, or delete on request. If you have questions about how your data was handled during
+                a specific session, or any other privacy questions, you can reach out at [YOUR EMAIL].
+            </p>
+        </section>
+
+        <section class="flex flex-col gap-2">
+            <h2 class="font-semibold text-gray-900">Changes to this policy</h2>
+            <p class="text-sm text-gray-600">
+                If this policy changes, for example, if we introduce optional accounts or persistent storage in the
+                future: we'll update this page and change the "last updated" date above.
+            </p>
+        </section>
+
+        <section class="flex flex-col gap-2">
+            <h2 class="font-semibold text-gray-900">Contact</h2>
+            <p class="text-sm text-gray-600">
+                Questions? Reach out at [YOUR EMAIL], or open an issue on&nbsp;
+                <a
+                    href="https://github.com/tanmaykundapur/ig-sleuth"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-blue-600 hover:underline"
+                >GitHub</a>.
+            </p>
+        </section>
+    </div>
+</BaseLayout>
