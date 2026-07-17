@@ -9,7 +9,6 @@ def unwrap_entries(raw_files: list[dict] | None) -> list[dict]:
         return entries
 
     for file_data in raw_files:
-        print("file_data type:", type(file_data), file_data if not isinstance(file_data, (list, dict)) else "")
         if isinstance(file_data, dict):
             for key, value in file_data.items():
                 if isinstance(value, list):

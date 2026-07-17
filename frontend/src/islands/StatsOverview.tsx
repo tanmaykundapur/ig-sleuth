@@ -40,9 +40,8 @@ export default function StatsOverview({
                         <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gray-100 shrink-0" />
                     )}
 
-                    {/* min-w-0 lets this column shrink instead of forcing siblings off the card */}
                     <div className="flex-1 min-w-0">
-                        <p className="text-lg font-bold text-gray-900 truncate">
+                        <p className="text-xl font-bold text-gray-900 truncate">
                             {profileInfo.name || "No name"}
                         </p>
                         <p className="text-sm text-gray-500 truncate">
@@ -50,42 +49,52 @@ export default function StatsOverview({
                         </p>
                     </div>
 
-                    {/* shrink-0 so the numbers never compress or wrap, no matter how long the name is */}
                     <div className="flex gap-6 shrink-0">
                         <div className="flex flex-col items-center">
-                            <span className="text-xl md:text-2xl font-bold text-gray-900">
+                            <span className="text-2xl md:text-3xl font-black text-gray-900 tabular-nums">
                                 {totalFollowers.toLocaleString()}
                             </span>
-                            <span className="text-xs md:text-sm text-gray-500">
-                                Followers
+                            <span className="text-xs md:text-sm font-medium text-gray-500 tracking-wide">
+                                followers
                             </span>
                         </div>
                         <div className="flex flex-col items-center">
-                            <span className="text-xl md:text-2xl font-bold text-gray-900">
+                            <span className="text-2xl md:text-3xl font-black text-gray-900 tabular-nums">
                                 {totalFollowing.toLocaleString()}
                             </span>
-                            <span className="text-xs md:text-sm text-gray-500">
-                                Following
+                            <span className="text-xs md:text-sm font-medium text-gray-500 tracking-wide">
+                                following
                             </span>
                         </div>
                     </div>
                 </div>
 
                 {/* secondary stats */}
-                <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-100">
-                    {secondaryStats.map((stat) => (
-                        <div
-                            key={stat.label}
-                            className="flex flex-col items-center text-center gap-1"
-                        >
-                            <span className="text-lg md:text-xl font-semibold text-gray-900">
-                                {stat.value.toLocaleString()}
-                            </span>
-                            <span className="text-xs text-gray-500">
-                                {stat.label}
-                            </span>
-                        </div>
-                    ))}
+                <div className="grid grid-cols-3 divide-x divide-gray-100 pt-6 border-t border-gray-100">
+                    <div className="flex flex-col items-center text-center gap-1 px-2">
+                        <span className="text-lg font-bold text-emerald-600 tabular-nums">
+                            {mutualCount.toLocaleString()}
+                        </span>
+                        <span className="text-xs text-gray-500 leading-tight">
+                            Mutuals
+                        </span>
+                    </div>
+                    <div className="flex flex-col items-center text-center gap-1 px-2">
+                        <span className="text-lg font-bold text-red-500 tabular-nums">
+                            {notFollowingBackCount.toLocaleString()}
+                        </span>
+                        <span className="text-xs text-gray-500 leading-tight">
+                            Not following back
+                        </span>
+                    </div>
+                    <div className="flex flex-col items-center text-center gap-1 px-2">
+                        <span className="text-lg font-bold text-amber-500 tabular-nums">
+                            {notFollowedBackByYouCount.toLocaleString()}
+                        </span>
+                        <span className="text-xs text-gray-500 leading-tight">
+                            You don't follow back
+                        </span>
+                    </div>
                 </div>
             </div>
 
