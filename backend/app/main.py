@@ -88,24 +88,7 @@ async def analyze(request: Request, file: UploadFile):
     )
 
     # Profile Analysis
-    print("raw_profile (live route):", raw_profile)
     profile_analysis_result = parse_profile(raw_profile)
     profile_analysis_result.profile_picture_url = profile_pic
 
     return AnalyzeResponse(connections=connections_analysis_result, profile=profile_analysis_result)
-
-# def main():
-#     tmp_path = Path("dev_data")
-#     print("tmp_path:", tmp_path)
-#     print("tmp_path resolved:", tmp_path.resolve())
-#     matching = list(tmp_path.rglob("personal_information.json"))
-#     print("Matched in real route:", matching)
-#     raw_profile = load_category_files(tmp_path, "personal_information.json")
-#     print("raw_profile in route:", raw_profile)
-#     profile_analysis_result = parse_profile(raw_profile)
-#     print("===========================")
-#     print(profile_analysis_result)
-
-
-# if __name__ == "__main__":
-#     main()
