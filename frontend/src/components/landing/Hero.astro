@@ -1,0 +1,27 @@
+---
+// components/landing/Hero.astro
+import RotatingHeadline from "../../islands/RotatingHeadline";
+import DashboardPreview from "./DashboardPreview.astro";
+---
+<section class="w-full flex flex-col items-center text-center gap-4 py-4 md:py-8">
+
+    <h1 class="text-5xl md:text-5xl font-bold leading-tight h-45 md:h-16 overflow-hidden flex items-center justify-center">
+        <RotatingHeadline client:load />
+    </h1>
+
+
+
+    <p class="text-base md:text-lg text-gray-500 max-w-xl">
+        Upload your Instagram export and get a clean breakdown of your followers,
+        mutuals, and more.
+    </p>
+
+    <DashboardPreview />
+
+    <a
+        href="/analyze"
+        class="w-full sm:w-auto px-8 py-3 rounded-lg bg-accent text-white font-medium hover:bg-[#4150F7] transition-colors text-center"
+    >
+        Analyze
+    </a>
+</section>

@@ -1,0 +1,86 @@
+---
+// components/landing/DashboardPreview.astro
+import { SealCheckIcon } from "@phosphor-icons/react";
+import profilePic from "../../assets/landingPageProfilePic.jpg";
+
+const demoStats = [
+    { label: "Mutuals", value: 553, color: "text-success" },
+    { label: "Not following back", value: 38, color: "text-danger" },
+    { label: "You don't follow back", value: 63, color: "text-warning-ig" },
+];
+
+const demoAccounts = ["fan_page_daily", "sportshighlights", "goatnews24"];
+---
+<section class="w-full flex flex-col items-center gap-4">
+
+    <div class="w-full max-w-2xl bg-gray-50 border border-gray-200 rounded-2xl p-4 md:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 origin-top">
+            <!-- profile card -->
+            <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <img class="w-10 h-10 rounded-full" src={profilePic.src} alt="Cristiano Ronaldo">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-1">
+                            <p class="text-sm font-bold text-gray-900 truncate">
+                                Cristiano Ronaldo
+                            </p>
+                            <SealCheckIcon weight="fill" className="text-accent" size={32} />
+
+                        </div>
+                        <p class="text-xs text-gray-500 truncate text-left">@cristiano</p>
+                    </div>
+                    <div class="flex gap-3 shrink-0 text-center">
+                        <div>
+                            <p class="text-sm font-black text-gray-900">658M</p>
+                            <p class="text-[10px] text-gray-500 uppercase">Followers</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-black text-gray-900">571</p>
+                            <p class="text-[10px] text-gray-500 uppercase">Following</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-3 divide-x divide-gray-100 pt-3 border-t border-gray-100">
+                    {demoStats.map((stat) => (
+                        <div class="flex flex-col items-center text-center gap-0.5 px-1">
+                            <span class={`text-sm font-bold ${stat.color}`}>
+                                {stat.value}
+                            </span>
+                            <span class="text-[10px] text-gray-500 leading-tight">
+                                {stat.label}
+                            </span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <!-- unfollower tracker card -->
+            <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                <div class="flex border-b border-gray-200">
+                    <div class="flex-1 px-2 py-2 text-xs font-medium border-b-2 border-gray-900 text-gray-900 text-center">
+                        Not following back
+                    </div>
+                    <div class="flex-1 px-2 py-2 text-xs font-medium text-gray-400 text-center">
+                        Mutuals
+                    </div>
+                </div>
+
+                <div class="p-4 flex flex-col gap-1.5">
+                    <p class="text-sm font-bold text-gray-900">38 accounts don't you follow back</p>
+
+                    <ul class="flex flex-col gap-1.5 mt-1">
+                        {demoAccounts.map((username) => (
+                            <li class="flex items-center justify-between px-3 py-1.5 border border-gray-200 rounded-lg">
+                                <span class="text-xs font-medium text-gray-900">
+                                    @{username}
+                                </span>
+                                <span class="text-gray-300 text-xs">→</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

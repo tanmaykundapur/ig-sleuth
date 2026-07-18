@@ -5,4 +5,8 @@
     --font-sans: "DM Sans", sans-serif;
     --font-script: "Luckiest Guy", cursive;
     --font-mouse: "Mouse Memoirs", sans-serif;
+    --color-accent: #4a5df9;
+    --color-success: #58c322;
+    --color-danger: #ed4956;
+    --color-warning-ig: #e8a317;
 }

@@ -1,0 +1,70 @@
+---
+// about.astro
+import { GithubLogoIcon, LinkedinLogoIcon, LinkIcon } from "@phosphor-icons/react/dist/ssr";
+import profilePic from "../assets/profile-pic.png";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const links = [
+    { href: "https://github.com/tanmaykundapur", label: "GitHub", Icon: GithubLogoIcon },
+    { href: "https://linkedin.com/in/tanmay-kundapur", label: "LinkedIn", Icon: LinkedinLogoIcon },
+    { href: "https://tanmaykundapur.vercel.app", label: "Portfolio", Icon: LinkIcon },
+];
+---
+<BaseLayout>
+    <div class="max-w-lg mx-auto w-full flex flex-col gap-8">
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 md:p-8 flex flex-row items-center text-center gap-4">
+            <div class="w-30 h-30 rounded-full overflow-hidden shrink-0">
+                <img class="w-full h-full object-cover" src={profilePic.src} alt="Tanmay Kundapur" />
+            </div>
+            <div>
+                <a href="https://tanmaykundapur.vercel.app/">
+                    <h1 class="text-2xl font-bold text-gray-900 text-left">Hey, I'm Tanmay Kundapur</h1>
+                </a>
+                <p class="text-md text-left">Founder & Developer</p>
+                <p class="text-sm text-gray-500 mt-1 text-left">
+                    Computer Engineering student <br> @ University of Michigan
+                </p>
+            </div>
+        </div>
+
+        <section class="flex flex-col gap-2">
+            <h2 class="font-semibold text-gray-900">Why I built this</h2>
+            <p class="text-sm text-gray-600 leading-relaxed">
+                InstaSleuth started as a way to get back into building something myself. 
+                Once I actually looked at what's inside an Instagram export,
+                I realized most "unfollower trackers" only use a fraction of it, so I
+                wanted to build something that shows a lot more than just who unfollowed
+                you, with a real focus on privacy.
+            </p>
+        </section>
+
+        <section class="flex flex-col gap-2">
+            <h2 class="font-semibold text-gray-900">What it's built with</h2>
+            <p class="text-sm text-gray-600 leading-relaxed">
+                Python and FastAPI on the backend, Astro and React on the frontend,
+                deployed on Cloudflare. Fully open source — you can read exactly how
+                your data is handled instead of taking my word for it.
+            </p>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <h2 class="font-semibold text-gray-900">Get in touch</h2>
+            <p class="text-sm text-gray-600">
+                Found a bug, have an idea, or just want to say hi - reach out.
+            </p>
+            <div class="flex flex-col gap-2">
+                {links.map(({ href, label, Icon }) => (
+                    <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-2 px-4 py-2.5 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-colors"
+                    >
+                        <Icon size={18} />
+                        {label}
+                    </a>
+                ))}
+            </div>
+        </section>
+    </div>
+</BaseLayout>

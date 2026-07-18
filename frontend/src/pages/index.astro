@@ -1,7 +1,17 @@
 ---
-import Dashboard from "../islands/Dashboard";
+// index.astro
+// import FeatureHighlights from "../components/landing/FeatureHighlights.astro";
+// import FinalCta from "../components/landing/FinalCta.astro";
+import Hero from "../components/landing/Hero.astro";
+// import PrivacyCallout from "../components/landing/PrivacyCallout.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 <BaseLayout>
-    <Dashboard client:load />
+    <div class="max-w-3xl mx-auto w-full flex flex-col gap-8">
+        <Hero />
+        <!-- <DashboardPreview /> -->
+        <!-- <FeatureHighlights />
+        <PrivacyCallout />
+        <FinalCta /> -->
+    </div>
 </BaseLayout>

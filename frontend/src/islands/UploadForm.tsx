@@ -74,7 +74,7 @@ export default function UploadForm({
                             onLoadingChange(false);
                         }
                     }}
-                    className="w-full py-2.5 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-colors"
+                    className="w-full py-2.5 rounded-lg bg-accent text-white text-sm font-medium hover:bg-[#4150F7] transition-colors"
                 >
                     Analyze
                 </button>

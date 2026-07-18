@@ -1,0 +1,9 @@
+---
+import Dashboard from "../islands/Dashboard";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout>
+    <div class="max-w-lg mx-auto w-full flex flex-col gap-8">
+        <Dashboard client:load />
+    </div>
+</BaseLayout>
