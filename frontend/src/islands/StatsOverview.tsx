@@ -72,7 +72,7 @@ export default function StatsOverview({
                 {/* secondary stats */}
                 <div className="grid grid-cols-3 divide-x divide-gray-100 pt-6 border-t border-gray-100">
                     <div className="flex flex-col items-center text-center gap-1 px-2">
-                        <span className="text-lg font-bold text-emerald-600 tabular-nums">
+                        <span className="text-lg font-bold text-success tabular-nums">
                             {mutualCount.toLocaleString()}
                         </span>
                         <span className="text-xs text-gray-500 leading-tight">
@@ -80,7 +80,7 @@ export default function StatsOverview({
                         </span>
                     </div>
                     <div className="flex flex-col items-center text-center gap-1 px-2">
-                        <span className="text-lg font-bold text-red-500 tabular-nums">
+                        <span className="text-lg font-bold text-danger tabular-nums">
                             {notFollowingBackCount.toLocaleString()}
                         </span>
                         <span className="text-xs text-gray-500 leading-tight">
@@ -88,7 +88,7 @@ export default function StatsOverview({
                         </span>
                     </div>
                     <div className="flex flex-col items-center text-center gap-1 px-2">
-                        <span className="text-lg font-bold text-amber-500 tabular-nums">
+                        <span className="text-lg font-bold text-warning-ig tabular-nums">
                             {notFollowedBackByYouCount.toLocaleString()}
                         </span>
                         <span className="text-xs text-gray-500 leading-tight">

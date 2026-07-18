@@ -46,7 +46,7 @@ export default function ExportInstructions() {
                     ))}
                 </ol>
 
-                <div className="mt-4 flex items-start gap-2 px-3 py-2.5 bg-blue-50 border border-blue-100 rounded-lg text-blue-900 text-xs">
+                <div className="mt-4 flex items-start gap-2 px-3 py-2.5 bg-accent/10 border border-accent/20 rounded-lg text-blue-900 text-xs">
                     <InfoIcon
                         size={16}
                         weight="fill"
