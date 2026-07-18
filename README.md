@@ -2,6 +2,8 @@
 
 Upload your Instagram data export and see what's actually in it — who doesn't follow you back, who followed you first, your biggest fans, and more. Nothing is stored. Your file is processed and discarded the moment your results are returned.
 
+<img width="1427" height="484" alt="InstaSleuth dashboard" src="https://github.com/user-attachments/assets/86040980-b5a1-404e-8f0a-bf5f16a85b5e" />
+
 ## Features
 
 - **Not following back / doesn't follow you** — a filterable, searchable breakdown of your connections
@@ -44,9 +46,6 @@ npm run dev
 
 Copy `.env.example` to `.env` in `frontend/` and set `PUBLIC_API_URL` to your local backend URL.
 
-## Screenshot
-
-<img width="1427" height="484" alt="InstaSleuth dashboard" src="https://github.com/user-attachments/assets/86040980-b5a1-404e-8f0a-bf5f16a85b5e" />
 
 ## Privacy
 
