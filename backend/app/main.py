@@ -7,10 +7,15 @@ from .models.connections import ConnectionsSnapshot, Relationship, RelationshipT
 from .models.profile import ProfileInfo
 from .models.response import AnalyzeResponse
 from .parsers.profile import parse_profile
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 
+limiter = Limiter(key_func=get_remote_address)
 app = FastAPI()
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler) # type: ignore[arg-type]
 
 MAX_UPLOAD_SIZE = 500 * 1024 * 1024
 
@@ -35,7 +40,8 @@ def safe_extract(zip_path: Path, extract_to: Path) -> None:
 
 # =============================================================================================================
 @app.post("/analyze")
-async def analyze(file: UploadFile):
+@limiter.limit("5/minute")
+async def analyze(request: Request, file: UploadFile):
     contents = await file.read()
     
     if len(contents) > MAX_UPLOAD_SIZE:
