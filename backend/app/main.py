@@ -1,3 +1,4 @@
+import os
 import json, tempfile, zipfile
 from pathlib import Path
 from .parsers.loader import load_category_files, load_profile_picture
@@ -19,9 +20,11 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler) # typ
 
 MAX_UPLOAD_SIZE = 500 * 1024 * 1024
 
+allowed_origins = os.environ.get("ALLOWED_ORIGINS", "http://localhost:4321").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4321"],
+    allow_origins=allowed_origins,
     allow_methods=["POST"],
     allow_headers=["*"],
 )

@@ -57,7 +57,7 @@ export default function UploadForm({
                         onLoadingChange(true);
                         try {
                             const response = await fetch(
-                                "http://localhost:8000/analyze",
+                                `${import.meta.env.PUBLIC_API_URL}/analyze`,
                                 {
                                     method: "POST",
                                     body: formData,
