@@ -1,4 +1,6 @@
 import os
+import fnmatch
+import base64
 import json, tempfile, zipfile
 from pathlib import Path
 from .parsers.loader import load_category_files, load_profile_picture
@@ -33,13 +35,34 @@ app.add_middleware(
 def home():
     return {"Hello": "World"}
 
-def safe_extract(zip_path: Path, extract_to: Path) -> None:
+def safe_extract(zip_path: Path, extract_to: Path, patterns: list[str]) -> None:
     with zipfile.ZipFile(zip_path) as zf:
-        for member in zf.namelist():
+        members_to_extract = [
+            m for m in zf.namelist()
+            if any(fnmatch.fnmatch(m, p) for p in patterns)
+        ]
+
+        for member in members_to_extract:
             target_path = (extract_to / member).resolve()
             if not str(target_path).startswith(str(extract_to.resolve())):
                 raise HTTPException(status_code=400, detail="Unsafe zip contents")
-        zf.extractall(extract_to)
+
+        zf.extractall(extract_to, members=members_to_extract)
+
+def extract_single_file(zip_path: Path, extract_to: Path, member_path: str) -> Path | None:
+    with zipfile.ZipFile(zip_path) as zf:
+        if member_path not in zf.namelist():
+            return None
+        target_path = (extract_to / member_path).resolve()
+        if not str(target_path).startswith(str(extract_to.resolve())):
+            raise HTTPException(status_code=400, detail="Unsafe zip contents")
+        zf.extract(member_path, extract_to)
+        return target_path
+
+def encode_profile_picture(path: Path) -> str:
+    image_bytes = path.read_bytes()
+    encoded = base64.b64encode(image_bytes).decode("utf-8")
+    return f"data:image/jpeg;base64,{encoded}"
 
 # =============================================================================================================
 @app.post("/analyze")
@@ -55,8 +78,16 @@ async def analyze(request: Request, file: UploadFile):
         zip_path = tmp_path / "upload.zip"
         zip_path.write_bytes(contents)
 
+        needed_patterns = [
+            "*followers_*.json",
+            "*following.json",
+            "*close_friends.json",
+            "*blocked_profiles.json",
+            "*personal_information.json",
+        ]
+
         try:
-            safe_extract(zip_path, tmp_path)
+            safe_extract(zip_path, tmp_path, needed_patterns)
         except zipfile.BadZipFile:
             raise HTTPException(status_code=400, detail="Not a valid zip file")
         
@@ -66,10 +97,20 @@ async def analyze(request: Request, file: UploadFile):
         raw_blocked = load_category_files(tmp_path, "blocked_profiles.json")
         profile_pic = load_profile_picture(tmp_path)
         raw_profile = load_category_files(tmp_path, "personal_information.json")
+        
+        profile_analysis_result = parse_profile(raw_profile)
 
+        profile_pic = None
+        if profile_analysis_result.profile_picture_relative_path:
+            picture_path = extract_single_file(
+                zip_path,
+                tmp_path,
+                profile_analysis_result.profile_picture_relative_path,
+            )
+            if picture_path:
+                profile_pic = encode_profile_picture(picture_path)
 
-
-    # ProfileInfo(name=name, username=username, email=None, profile_picture_url=profile_pic)
+        profile_analysis_result.profile_picture_url = profile_pic
 
     snapshot = parse_connections(raw_followers, raw_following, raw_close_friends)
     relationships = group_by_username(snapshot)

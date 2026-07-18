@@ -8,10 +8,20 @@ def encode_profile_picture(path: Path) -> str:
     return f"data:image/jpeg;base64,{encoded}"
 
 def parse_profile(raw_profile: list[dict]) -> ProfileInfo:
-    data = raw_profile[0]["profile_user"][0]["string_map_data"]
-    name = data["Name"]["value"]
-    username = data["Username"]["value"]
+    profile_user = raw_profile[0]["profile_user"][0]
+    string_data = profile_user["string_map_data"]
+    media_data = profile_user.get("media_map_data", {})
+
+    name = string_data.get("Name", {}).get("value")
+    username = string_data.get("Username", {}).get("value", "unknown")
+
     email = None
-    profile_picture_url = None
-    
-    return ProfileInfo(name=name, username=username, email=email, profile_picture_url=profile_picture_url)
+    profile_picture_relative_path = media_data.get("Profile Photo", {}).get("uri")
+
+    return ProfileInfo(
+        name=name,
+        username=username,
+        email=email,
+        profile_picture_url=None,
+        profile_picture_relative_path=profile_picture_relative_path,
+    )
