@@ -1,4 +1,8 @@
-import { CaretCircleLeftIcon, InfoIcon } from "@phosphor-icons/react";
+import {
+    ArrowSquareOutIcon,
+    CaretCircleLeftIcon,
+    InfoIcon,
+} from "@phosphor-icons/react";
 
 interface Step {
     text: string;
@@ -20,17 +24,29 @@ const steps: Step[] = [
     { text: "Under Format, select", bold: "JSON" },
     { text: "Tap", bold: "Start export" },
 ];
-
 export default function ExportInstructions() {
     return (
-        <div className="w-full bg-white border border-gray-200 rounded-2xl shadow-sm">
-            <details open className="group p-4 md:p-6">
-                <summary className="flex items-center justify-between cursor-pointer list-none">
-                    <h2 className="text-lg font-semibold text-gray-900">
-                        How to get your Instagram data
-                    </h2>
+        <div className="w-full bg-white border border-gray-200 rounded-2xl shadow-sm p-4 md:p-6 flex flex-col gap-3">
+            <div>
+                <h2 className="text-lg font-semibold text-gray-900 mb-1">
+                    Get your Instagram data
+                </h2>
+                <a
+                    href="https://accountscenter.instagram.com/info_and_permissions/dyi/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 px-4 py-3 my-3 rounded-lg border border-accent text-accent text-sm font-medium hover:bg-accent/10 transition-colors"
+                >
+                    Jump straight to the export page
+                    <ArrowSquareOutIcon size={16} weight="bold" />
+                </a>
+            </div>
+
+            <details className="group">
+                <summary className="flex items-center justify-between cursor-pointer list-none text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors">
+                    Link not working? See the manual steps
                     <CaretCircleLeftIcon
-                        size={20}
+                        size={18}
                         className="text-gray-400 transition-transform duration-200 group-open:rotate-270"
                     />
                 </summary>
@@ -46,7 +62,7 @@ export default function ExportInstructions() {
                     ))}
                 </ol>
 
-                <div className="mt-4 flex items-start gap-2 px-3 py-2.5 bg-accent/10 border border-accent/20 rounded-lg text-blue-900 text-xs">
+                <div className="mt-4 flex items-start gap-2 px-3 py-2.5 bg-accent/10 border border-accent/20 rounded-lg text-gray-700 text-xs">
                     <InfoIcon
                         size={16}
                         weight="fill"
